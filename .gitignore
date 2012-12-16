@@ -1,0 +1,8 @@
+*~
+.*.swp
+config/
+*.in
+aclocal.m4
+m4/
+reconf
+configure

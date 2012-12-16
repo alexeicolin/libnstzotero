@@ -1,0 +1,22 @@
+# British English translation of libnstzotero
+# Copyright (C) 2012 Alexei Colin
+# This file is distributed under the same license as the libnstzotero package.
+# Alexei Colin <alexei@alexeicolin.com>, 2012
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: libnstzotero\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-12-16 02:11-0500\n"
+"PO-Revision-Date: 2012-12-16 02:11-0500\n"
+"Last-Translator: Alexei Colin <alexei@alexeicolin.com>\n"
+"Language-Team: British English <en@li.org>\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/nst-zotero.c:45
+msgid "Add to Zotero"
+msgstr "Add to Zotero"
