@@ -23,5 +23,5 @@ plugin_LTLIBRARIES = libnstzotero.la
 
 libnstzotero_la_SOURCES = nst-zotero.c
 libnstzotero_la_LDFLAGS = -module -avoid-version
-libnstzotero_la_LIBADD = $(NST_LIBS)
+libnstzotero_la_LIBADD = $(NST_LIBS) $(DEPS_LIBS)
 
