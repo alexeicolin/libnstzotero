@@ -26,7 +26,7 @@ AM_PATH_GLIB_2_0
 
 # Initialize libtool
 LT_PREREQ([2.2])
-LT_INIT
+LT_INIT([disable-static])
 
 AC_CONFIG_FILES([
    Makefile
