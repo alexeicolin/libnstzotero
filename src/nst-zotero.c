@@ -28,30 +28,55 @@
 static gboolean
 init(NstPlugin *plugin)
 {
-  g_print("Init %s plugin\n", plugin->info->id);
-  return TRUE;
+    g_print("Init %s plugin\n", plugin->info->id);
+    return TRUE;
 }
 
 static gboolean
 destroy(NstPlugin *plugin)
 {
-  g_print("Destroy %s plugin\n", plugin->info->id);
-  return TRUE;
+    g_print("Destroy %s plugin\n", plugin->info->id);
+    return TRUE;
+}
+
+static GtkWidget *
+get_contacts_widget(NstPlugin *plugin)
+{
+    GtkWidget *placeholder_widget = gtk_label_new("");
+    return placeholder_widget;
+}
+
+static gboolean
+validate_destination (NstPlugin *plugin,
+        GtkWidget *contact_widget,
+        gchar **error)
+{
+    g_print("nst-zotero: destination valid\n");
+    return TRUE;
+}
+
+static gboolean
+send_files (NstPlugin *plugin,
+            GtkWidget *contact_widget,
+            GList *file_list)
+{
+    g_print("nst-zotero: send files\n");
+    return TRUE;
 }
 
 
 static
 NstPluginInfo plugin_info = {
-  "zotero",
-  "zotero",
-  N_("Add to Zotero"),
-  GETTEXT_PACKAGE,
-  NAUTILUS_CAPS_NONE,
-  init,
-  NULL /* get_contacts_widget */,
-  NULL /* validate_destination */,
-  NULL /* send_files */,
-  destroy
+    "zotero",
+    "zotero",
+    N_("Add to Zotero"),
+    GETTEXT_PACKAGE,
+    NAUTILUS_CAPS_NONE,
+    init,
+    get_contacts_widget,
+    validate_destination,
+    send_files,
+    destroy
 };
 
 NST_INIT_PLUGIN (plugin_info)
