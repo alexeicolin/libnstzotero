@@ -1,0 +1,6 @@
+This project uses automake toolset and the auto-generated build system is not
+version controlled (so that your favorite versions of the toolchain can be
+used), and is only added to release tags.
+
+To generate the build system:
+$ autoreconf -i
