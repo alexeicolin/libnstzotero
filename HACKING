@@ -2,5 +2,22 @@ This project uses automake toolset and the auto-generated build system is not
 version controlled (so that your favorite versions of the toolchain can be
 used), and is only added to release tags.
 
+The needed scripts are here:
+http://autotoolset.sourceforge.net/
+
 To generate the build system:
+$ mkdir m4
 $ autoreconf -i
+$ intltoolize
+
+To build for debugging:
+# mkdir /usr/local-dbg
+# echo -e 'CPPFALGS=-DDEBUG\nCFLAGS="-g -O0 -Wall"' > /usr/local-dbg/share/config.site
+$ ./configure --prefix=/usr/local-dbg
+$ make
+$ make install
+
+The nautilus-sendto plugin scans /usr/lib/nautilus-sendto/plugins, so
+one way is to temporarily:
+$ ln -s /usr/local-dbg/lib/nautilus-sendto/plugins/libnstzotero.so \
+/usr/lib/nautilus-sendto/plugins
