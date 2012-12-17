@@ -15,7 +15,7 @@ INTLTOOL_FILES = intltool-extract.in \
 EXTRA_DIST = reconf configure $(INTLTOOL_FILES)
 ACLOCAL_AMFLAGS = -I m4
 
-SUBDIRS = m4 src doc po
+SUBDIRS = src doc po
 
 DISTCLEANFILES = ... intltool-extract \
 				 intltool-merge \
