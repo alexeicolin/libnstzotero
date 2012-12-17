@@ -4,6 +4,10 @@
 *.lo
 *.la
 *.gmo
+autom4te.cache/
+src/.deps/
+src/.libs/
+
 config/
 Makefile.in
 */Makefile.in
@@ -13,7 +17,6 @@ aclocal.m4
 m4/
 reconf
 configure
-autom4te.cache/
 config.h
 config.h.in
 config.log
@@ -25,6 +28,4 @@ libtool
 po/Makefile.in.in
 po/POTFILES
 po/stamp-it
-src/.deps/
-src/.libs/
 stamp-h1
