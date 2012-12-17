@@ -18,5 +18,5 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../src/nst-zotero.c:45
-msgid "Add to Zotero"
-msgstr "Add to Zotero"
+msgid "Reference Attachment (Zotero)"
+msgstr "Reference Attachment (Zotero)"

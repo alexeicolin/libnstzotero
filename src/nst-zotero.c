@@ -128,7 +128,7 @@ static
 NstPluginInfo plugin_info = {
     "zotero",
     "zotero",
-    N_("Add to Zotero"),
+    N_("Reference Attachment (Zotero)"),
     GETTEXT_PACKAGE,
     NAUTILUS_CAPS_NONE,
     init,
