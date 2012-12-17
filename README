@@ -1,5 +1,14 @@
 Welcome to libnstzotero.
 
+This is a plugin for GNOME's nautilus-sendto application that allows you to add
+files into Zotero. The primary use case is to add PDFs from evince directly to
+Zotero (without having to Alt-TAB into Zotero).
+
+Currently, this requires a patched Zotero. A flag needs to be exposed in the
+connector interface. See wiki for the patch. The plan is to ask upstream to
+include the patch, and if not, then make a Zotero extension that extends the
+connector with a dedicated end-point.
+
 libnstzotero is free software. Please see the file COPYING for details.
 For documentation, please see the files in the doc subdirectory.
 For building and installation instructions please see the INSTALL file.
