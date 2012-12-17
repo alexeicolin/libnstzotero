@@ -9,7 +9,7 @@
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 AC_INIT([libnstzotero],
-        [0.1],
+        [0.1.1],
         [Alexei Colin alexei@alexeicolin.com],
         [libnstzotero])
 AC_CONFIG_AUX_DIR(config)
