@@ -7,8 +7,8 @@ http://autotoolset.sourceforge.net/
 
 To generate the build system:
 $ mkdir m4
-$ autoreconf -i
 $ intltoolize
+$ autoreconf -i
 
 To build for debugging:
 # mkdir /usr/local-dbg
