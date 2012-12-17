@@ -62,6 +62,7 @@ PKG_CHECK_MODULES(DEPS,
    gmodule-export-2.0
    gobject-2.0
    nautilus-sendto >= $NAUTILUS_SENDTO_REQUIRED
+   json-glib-1.0
    libsoup-2.4
 ])
 

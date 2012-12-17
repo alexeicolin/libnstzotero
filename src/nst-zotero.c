@@ -31,12 +31,13 @@
 #include <libsoup/soup.h>
 #endif
 
-/* TODO: move the URI to GNOME settings */
-#define ZOTERO_CONNECTOR_URI "http://127.0.0.1:23119/connector/ping"
-#define ZOTERO_CONNECTOR_API_VERSION "2"
-#define ZOTERO_VERSION "3.0.11.1"
+#include <json-glib/json-glib.h>
 
-#define HTTP_STATUS_OK 200
+/* TODO: move the URI to GNOME settings? */
+#define ZOTERO_CONNECTOR_URI "http://127.0.0.1:23119/connector/"
+#define ZOTERO_CONNECTOR_API_VERSION "2.1"
+
+#define SAVE_ITEMS_STATUS_OK 201
 
 static gboolean
 init(NstPlugin *plugin)
@@ -55,17 +56,45 @@ destroy(NstPlugin *plugin)
 static GtkWidget *
 get_contacts_widget(NstPlugin *plugin)
 {
+    /* TODO: eventually, this could be a collection selector */
     GtkWidget *placeholder_widget = gtk_label_new ("");
     return placeholder_widget;
 }
 
-static gboolean
-validate_destination (NstPlugin *plugin,
-        GtkWidget *contact_widget,
-        gchar **error)
+static gchar *
+build_save_items_request (GList *file_list)
 {
-    g_print ("nst-zotero: destination valid\n");
-    return TRUE;
+    GList *l;
+
+    JsonBuilder *json_builder = json_builder_new ();
+    json_builder_begin_object (json_builder);
+
+    json_builder_set_member_name (json_builder, "items");
+    json_builder_begin_array (json_builder);
+    for (l = file_list; l; l = l->next) {
+        gchar *path = l->data;
+
+        json_builder_begin_object (json_builder);
+        json_builder_set_member_name (json_builder, "itemType");
+        json_builder_add_string_value (json_builder, "attachment");
+        json_builder_set_member_name (json_builder, "path");
+        json_builder_add_string_value (json_builder, path);
+        json_builder_end_object (json_builder);
+    }
+    json_builder_end_array (json_builder);
+
+    json_builder_set_member_name (json_builder, "attachmentMode");
+    json_builder_add_string_value (json_builder, "file");
+    json_builder_end_object (json_builder);
+
+    JsonGenerator *json_gen = json_generator_new ();
+    JsonNode *root = json_builder_get_root (json_builder);
+    json_generator_set_root (json_gen, root);
+    gchar *save_items_request = json_generator_to_data (json_gen, NULL);
+    json_node_free (root);
+    g_object_unref (json_gen);
+    g_object_unref (json_builder);
+    return save_items_request;
 }
 
 static gboolean
@@ -73,21 +102,24 @@ send_files (NstPlugin *plugin,
             GtkWidget *contact_widget,
             GList *file_list)
 {
-    guint status;
+    if (!file_list)
+        return TRUE; /* returning false, just hangs the send-to dialog */
+
+    gchar *save_items_req = build_save_items_request (file_list);
+
     SoupSession *soup_session = soup_session_sync_new ();
-    SoupMessage *ping_msg = soup_message_new ("POST", ZOTERO_CONNECTOR_URI);
-    soup_message_headers_append (ping_msg->request_headers,
-            "Content-Type", "application/json");
-    soup_message_headers_append (ping_msg->request_headers,
-            "X-Zotero-Version", ZOTERO_VERSION);
-    soup_message_headers_append (ping_msg->request_headers,
+    SoupMessage *save_msg =
+        soup_message_new ("POST", ZOTERO_CONNECTOR_URI"saveItems");
+    soup_message_set_request (save_msg, "application/json", SOUP_MEMORY_TAKE,
+            save_items_req, strlen (save_items_req));
+    soup_message_headers_append (save_msg->request_headers,
             "X-Zotero-Connector-API-Version", ZOTERO_CONNECTOR_API_VERSION);
-    g_print ("nst-zotero: send files\n");
-    status = soup_session_send_message(soup_session, ping_msg);
-    g_print ("nst-zotero: response status %u\n", status);
-    if (status != HTTP_STATUS_OK)
-        g_warning ("nst-zotero: send failed: response status %u\n", status);
-    g_object_unref (ping_msg);
+
+    guint status = soup_session_send_message(soup_session, save_msg);
+    if (status != SAVE_ITEMS_STATUS_OK)
+        g_warning ("nst-zotero: send failed: response to saveItems: %u\n", status);
+    /* TODO: returning false just hands the send-to dialog, how to fail? */
+    g_object_unref (save_msg);
     g_object_unref (soup_session);
     return TRUE;
 }
@@ -101,7 +133,7 @@ NstPluginInfo plugin_info = {
     NAUTILUS_CAPS_NONE,
     init,
     get_contacts_widget,
-    validate_destination,
+    NULL,
     send_files,
     destroy
 };
