@@ -30,7 +30,6 @@ LT_INIT([disable-static])
 
 AC_CONFIG_FILES([
    Makefile
-   README
    doc/Makefile
    m4/Makefile
    src/Makefile
