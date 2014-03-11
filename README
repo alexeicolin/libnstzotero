@@ -8,6 +8,8 @@ Currently, this requires a patched Zotero. A flag needs to be exposed in the
 connector interface. The patch is in zotero/ directory. The plan is to ask
 upstream to include the patch, and if not, then make a Zotero extension that
 extends the connector with a dedicated end-point.
+UPDATE: The patch has security implications since websites have access to the
+connector (see the (pull request)[https://github.com/zotero/zotero/pull/212]).
 
 libnstzotero is free software. Please see the file COPYING for details.
 For documentation, please see the files in the doc subdirectory.
