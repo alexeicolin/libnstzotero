@@ -79,6 +79,10 @@ build_save_items_request (GList *file_list)
         json_builder_add_string_value (json_builder, "attachment");
         json_builder_set_member_name (json_builder, "path");
         json_builder_add_string_value (json_builder, path);
+        json_builder_set_member_name (json_builder, "attachments");
+        json_builder_begin_array (json_builder);
+        /* empty (but required for each item) */
+        json_builder_end_array (json_builder);
         json_builder_end_object (json_builder);
     }
     json_builder_end_array (json_builder);
